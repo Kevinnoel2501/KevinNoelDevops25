@@ -42,3 +42,9 @@ resource "azurerm_role_assignment" "acr_pull" {
   principal_id         = azurerm_kubernetes_cluster.aks.identity[0].principal_id
 }
 
+##### Added later as AKS needs both identies as AcrPull in ACR
+resource "azurerm_role_assignment" "acr_pull_nodepool" {
+  scope                = data.azurerm_container_registry.acr.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
+}
