@@ -1,0 +1,6 @@
+apiVersion: v2
+name: random-app-2
+description: helm random-app 2
+type: application
+version: 0.1.0
+appVersion: "latest"

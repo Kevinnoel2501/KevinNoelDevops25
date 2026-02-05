@@ -1,0 +1,67 @@
+parameters:
+  solution: '**/*.sln'
+  buildConfiguration: 'Release'
+  artifactName: 'drop'
+
+steps:
+- checkout: self
+  clean: true
+
+- task: UseDotNet@2
+  displayName: 'Use .NET SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '8.x'   # adjust if needed
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restore NuGet packages'
+  inputs:
+    command: 'restore'
+    projects: ${{ parameters.solution }}
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build solution'
+  inputs:
+    command: 'build'
+    projects: ${{ parameters.solution }}
+    arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run tests'
+  inputs:
+    command: 'test'
+    projects: '**/*Tests/*.csproj'
+    arguments: >
+      --configuration ${{ parameters.buildConfiguration }}
+      --no-build
+    publishTestResults: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish application'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: |
+      RandomSentenceApp/RandomSentenceApp.csproj
+    arguments: >
+      --configuration ${{ parameters.buildConfiguration }}
+      --output $(Build.ArtifactStagingDirectory)
+    zipAfterPublish: false
+
+# NEW: Zip the published output
+- task: ArchiveFiles@2
+  displayName: 'Archive published output'
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.artifactName }}.zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish build artifact (zip only)'
+  inputs:
+    pathToPublish: '$(Build.ArtifactStagingDirectory)/${{ parameters.artifactName }}.zip'
+    artifactName: ${{ parameters.artifactName }}
+    publishLocation: 'Container'
+

@@ -1,0 +1,51 @@
+PS /Users/sonu/MyContainerProj> az account show  
+{
+  "environmentName": "AzureCloud",
+  "homeTenantId": "2c521616-8408-4e74-86ed-0c59e0681ded",
+  "id": "44365db7-8b22-49fd-8f3b-db80bfbeb5a5",
+  "isDefault": true,
+  "managedByTenants": [],
+  "name": "Azure subscription 1",
+  "state": "Enabled",
+  "tenantDefaultDomain": "kevinnoelk2520outlook847.onmicrosoft.com",
+  "tenantDisplayName": "Default Directory",
+  "tenantId": "2c521616-8408-4e74-86ed-0c59e0681ded",
+  "user": {
+    "name": "kevin.noelk2520@outlook.com",
+    "type": "user"
+  }
+}
+
+
+
+####################### PUSH TO ACR #############################
+
+S /Users/sonu/MyContainerProj> ./push-to-acr.ps1
+Logging into ACR testkevinacr.azurecr.io
+Login Succeeded
+Tagging image...
+Pushing image with tag: latest
+The push refers to repository [testkevinacr.azurecr.io/random-sentence-app]
+da398f7850c0: Pushed 
+0fa7199bc866: Pushed 
+a5a00743b72f: Pushed 
+50ac3035e648: Pushed 
+be6e3c8cdffa: Pushed 
+3ef7c3c189c7: Pushed 
+d3d5d8ab26d2: Pushed 
+a44282a7524a: Pushed 
+latest: digest: sha256:038e48fc460c83dc98f443afde532333ac41a58fa14b8d0f7147a7779ef48bfe size: 856
+Pushing image with tag: 20260205-095259
+The push refers to repository [testkevinacr.azurecr.io/random-sentence-app]
+d3d5d8ab26d2: Layer already exists 
+da398f7850c0: Layer already exists 
+a5a00743b72f: Layer already exists 
+0fa7199bc866: Layer already exists 
+a44282a7524a: Layer already exists 
+50ac3035e648: Layer already exists 
+be6e3c8cdffa: Already exists 
+3ef7c3c189c7: Layer already exists 
+20260205-095259: digest: sha256:038e48fc460c83dc98f443afde532333ac41a58fa14b8d0f7147a7779ef48bfe size: 856
+  - testkevinacr.azurecr.io/random-sentence-app:latest
+  - testkevinacr.azurecr.io/random-sentence-app:20260205-095259
+PS /Users/sonu/MyContainerProj> 

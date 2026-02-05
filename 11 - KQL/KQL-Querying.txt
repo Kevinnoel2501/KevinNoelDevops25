@@ -1,0 +1,3 @@
+####### KQL #########
+
+Wrote a simple query which joins two tables in the AKS cluster and gets all the writes to error stream with the pod information.

@@ -1,0 +1,10 @@
+2026-02-04T20:29:55.3177780Z ##[section]Starting: Checkout Kevinnoel2501/SampleDotnetProj@dev to s
+2026-02-04T20:29:55.3186430Z ==============================================================================
+2026-02-04T20:29:55.3186740Z Task         : Get sources
+2026-02-04T20:29:55.3186910Z Description  : Get sources from a repository. Supports Git, TfsVC, and SVN repositories.
+2026-02-04T20:29:55.3187100Z Version      : 1.0.0
+2026-02-04T20:29:55.3187230Z Author       : Microsoft
+2026-02-04T20:29:55.3187340Z Help         : [More Information](https://go.microsoft.com/fwlink/?LinkId=798199)
+2026-02-04T20:29:55.3187560Z ==============================================================================
+2026-02-04T20:29:55.5621700Z Cleaning any cached credential from repository: Kevinnoel2501/SampleDotnetProj (GitHub)
+2026-02-04T20:29:55.5676780Z ##[section]Finishing: Checkout Kevinnoel2501/SampleDotnetProj@dev to s

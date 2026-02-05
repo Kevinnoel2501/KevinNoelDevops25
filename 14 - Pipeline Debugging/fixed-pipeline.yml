@@ -1,0 +1,112 @@
+name: $(Build.DefinitionName)_$(Date:yyyyMMdd).$(Rev:r)
+
+pool: 'Default'
+
+###################################### linking ##########################################
+variables:
+ - group: 'dev-vars' 
+ 
+trigger:
+  branches:
+    include:
+      - main
+      - dev
+      - stg
+
+stages:
+
+- stage: Build
+  displayName: 'Build and Test'
+  jobs:
+  - job: Build
+    displayName: 'Build Random Sentence Proj'
+    steps:
+    - template: templates/build.yml
+      parameters:
+        solution: '**/*.sln'
+        buildConfiguration: 'Release'
+        artifactName: 'drop'
+
+- stage: ReleaseDev # dev deploy
+  displayName: 'Release to Dev App Service'
+  dependsOn: Build
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+  jobs:
+  - job: DeployDev
+    displayName: 'Deploy Dev'
+    steps:
+    - template: templates/release.yml
+      parameters:
+        environment: 'dev'
+        appServiceName: 'test-app'
+        resourceGroupName: 'test-rg'
+        sp: 'Pipelines-Service'
+        keyVaultName: 'testkevinakv'
+        secretName: 'StorageAccountConnStr'
+################################## Simulate an missing value error ########################################
+    - script: |
+        echo "PRINT DEV VAR printme : $(printme)"
+      displayName: 'Simulate unlinked var group error'
+
+- stage: ReleaseStg # stg deploy
+  displayName: 'Release to Stg App Service'
+  dependsOn: Build
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/stg')
+  jobs:
+  - job: DeployStg
+    displayName: 'Deploy Stg'
+    steps:
+    - template: templates/release.yml
+      parameters:
+        environment: 'stg'
+        appServiceName: 'test-app'
+        resourceGroupName: 'test-rg'
+        sp: 'Pipelines-Service'
+        keyVaultName: 'testkevinakv'
+        secretName: 'StorageAccountConnStr'
+
+    - script: |
+        echo "Run integration test"
+      displayName: 'Run Integration Tests'
+
+- stage: ReleaseStgFromMain # main branch deploy
+  displayName: 'Release to Stg (Main)'
+  dependsOn: Build
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  jobs:
+  - job: DeployStgMain
+    displayName: 'Deploy Stg from Main'
+    steps:
+    - template: templates/release.yml
+      parameters:
+        environment: 'stg'
+        appServiceName: 'test-app'
+        resourceGroupName: 'test-rg'
+        sp: 'Pipelines-Service'
+        keyVaultName: 'testkevinakv'
+        secretName: 'StorageAccountConnStr'
+
+    - script: |
+        echo "Run integration test"
+      displayName: 'Run Integration Tests'
+
+- stage: ReleaseProd # release to prd
+  displayName: 'Release to Prod App Service'
+  dependsOn: ReleaseStgFromMain
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  jobs:
+  - deployment: DeployProd
+    displayName: 'Deploy Prod'
+    environment: 'prd'   # prd environemnt is set for approval
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: templates/release.yml
+            parameters:
+              environment: 'prd'
+              appServiceName: 'test-app'
+              resourceGroupName: 'test-rg'
+              sp: 'Pipelines-Service'
+              keyVaultName: 'testkevinakv'
+              secretName: 'StorageAccountConnStr'

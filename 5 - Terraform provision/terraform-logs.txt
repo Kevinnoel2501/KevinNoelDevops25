@@ -1,0 +1,294 @@
+########## TERRAFORM INIT ##################
+
+###### WE ARE CONNECTING TO A REMOTE BACKEND (tetkevinsto) to store the state files better ##################
+
+
+PS /Users/sonu/MyContainerProj/.infra/Iac> terraform init
+
+Initializing the backend...
+
+Successfully configured the backend "azurerm"! Terraform will automatically
+use this backend unless the backend configuration changes.
+Initializing modules...
+- aks in modules/aks
+
+Initializing provider plugins...
+- Finding hashicorp/azurerm versions matching "~> 3.100"...
+- Installing hashicorp/azurerm v3.117.1...
+- Installed hashicorp/azurerm v3.117.1 (signed by HashiCorp)
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+
+
+
+
+#################### TERRAFORM PLAN #################
+
+
+PS /Users/sonu/MyContainerProj/.infra/Iac> terraform plan
+Acquiring state lock. This may take a few moments...
+module.aks.data.azurerm_resource_group.rg: Reading...
+module.aks.data.azurerm_resource_group.rg: Read complete after 1s [id=/subscriptions/44365db7-8b22-49fd-8f3b-db80bfbeb5a5/resourceGroups/test-rg]
+module.aks.data.azurerm_container_registry.acr: Reading...
+module.aks.data.azurerm_container_registry.acr: Read complete after 1s [id=/subscriptions/44365db7-8b22-49fd-8f3b-db80bfbeb5a5/resourceGroups/test-rg/providers/Microsoft.ContainerRegistry/registries/testkevinacr]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.aks.azurerm_kubernetes_cluster.aks will be created
+  + resource "azurerm_kubernetes_cluster" "aks" {
+      + api_server_authorized_ip_ranges     = (known after apply)
+      + current_kubernetes_version          = (known after apply)
+      + dns_prefix                          = "test-kevin-aks"
+      + fqdn                                = (known after apply)
+      + http_application_routing_zone_name  = (known after apply)
+      + id                                  = (known after apply)
+      + image_cleaner_enabled               = false
+      + image_cleaner_interval_hours        = 48
+      + kube_admin_config                   = (sensitive value)
+      + kube_admin_config_raw               = (sensitive value)
+      + kube_config                         = (sensitive value)
+      + kube_config_raw                     = (sensitive value)
+      + kubernetes_version                  = (known after apply)
+      + location                            = "eastus"
+      + name                                = "test-kevin-aks"
+      + node_resource_group                 = (known after apply)
+      + node_resource_group_id              = (known after apply)
+      + oidc_issuer_url                     = (known after apply)
+      + portal_fqdn                         = (known after apply)
+      + private_cluster_enabled             = false
+      + private_cluster_public_fqdn_enabled = false
+      + private_dns_zone_id                 = (known after apply)
+      + private_fqdn                        = (known after apply)
+      + public_network_access_enabled       = true
+      + resource_group_name                 = "test-rg"
+      + role_based_access_control_enabled   = true
+      + run_command_enabled                 = true
+      + sku_tier                            = "Free"
+      + support_plan                        = "KubernetesOfficial"
+      + workload_identity_enabled           = false
+
+      + default_node_pool {
+          + kubelet_disk_type    = (known after apply)
+          + max_pods             = (known after apply)
+          + name                 = "system"
+          + node_count           = 1
+          + node_labels          = (known after apply)
+          + orchestrator_version = (known after apply)
+          + os_disk_size_gb      = (known after apply)
+          + os_disk_type         = "Managed"
+          + os_sku               = (known after apply)
+          + scale_down_mode      = "Delete"
+          + type                 = "VirtualMachineScaleSets"
+          + ultra_ssd_enabled    = false
+          + vm_size              = "Standard_DS2_v2"
+          + workload_runtime     = (known after apply)
+        }
+
+      + identity {
+          + principal_id = (known after apply)
+          + tenant_id    = (known after apply)
+          + type         = "SystemAssigned"
+        }
+
+      + oms_agent {
+          + log_analytics_workspace_id = (known after apply)
+          + oms_agent_identity         = (known after apply)
+        }
+    }
+
+  # module.aks.azurerm_log_analytics_workspace.analytics-workspace will be created
+  + resource "azurerm_log_analytics_workspace" "analytics-workspace" {
+      + allow_resource_only_permissions = true
+      + daily_quota_gb                  = -1
+      + id                              = (known after apply)
+      + internet_ingestion_enabled      = true
+      + internet_query_enabled          = true
+      + local_authentication_disabled   = false
+      + location                        = "eastus"
+      + name                            = "test-kevin-aks-log-analworkspc"
+      + primary_shared_key              = (sensitive value)
+      + resource_group_name             = "test-rg"
+      + retention_in_days               = 30
+      + secondary_shared_key            = (sensitive value)
+      + sku                             = "PerGB2018"
+      + workspace_id                    = (known after apply)
+    }
+
+  # module.aks.azurerm_role_assignment.acr_pull will be created
+  + resource "azurerm_role_assignment" "acr_pull" {
+      + id                               = (known after apply)
+      + name                             = (known after apply)
+      + principal_id                     = (known after apply)
+      + principal_type                   = (known after apply)
+      + role_definition_id               = (known after apply)
+      + role_definition_name             = "AcrPull"
+      + scope                            = "/subscriptions/44365db7-8b22-49fd-8f3b-db80bfbeb5a5/resourceGroups/test-rg/providers/Microsoft.ContainerRegistry/registries/testkevinacr"
+      + skip_service_principal_aad_check = (known after apply)
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+Releasing state lock. This may take a few moments...
+
+
+
+############### TERRAFORM APPLYY ################
+
+
+########### Missed few logs : The first terraform apply run created the log analytics workspace and errored out for aks provisioning due to the chosen vm_image for my subscription was not allowed ##############
+
+################## APPLY AFTER FIXING THE ISSUE ############################
+
+PS /Users/sonu/MyContainerProj/.infra/Iac> terraform apply --auto-approve
+Acquiring state lock. This may take a few moments...
+module.aks.data.azurerm_resource_group.rg: Reading...
+module.aks.data.azurerm_resource_group.rg: Read complete after 0s [id=/subscriptions/44365db7-8b22-49fd-8f3b-db80bfbeb5a5/resourceGroups/test-rg]
+module.aks.data.azurerm_container_registry.acr: Reading...
+module.aks.azurerm_log_analytics_workspace.analytics-workspace: Refreshing state... [id=/subscriptions/44365db7-8b22-49fd-8f3b-db80bfbeb5a5/resourceGroups/test-rg/providers/Microsoft.OperationalInsights/workspaces/test-kevin-aks-log-analworkspc]
+module.aks.data.azurerm_container_registry.acr: Read complete after 2s [id=/subscriptions/44365db7-8b22-49fd-8f3b-db80bfbeb5a5/resourceGroups/test-rg/providers/Microsoft.ContainerRegistry/registries/testkevinacr]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.aks.azurerm_kubernetes_cluster.aks will be created
+  + resource "azurerm_kubernetes_cluster" "aks" {
+      + api_server_authorized_ip_ranges     = (known after apply)
+      + current_kubernetes_version          = (known after apply)
+      + dns_prefix                          = "test-kevin-aks"
+      + fqdn                                = (known after apply)
+      + http_application_routing_zone_name  = (known after apply)
+      + id                                  = (known after apply)
+      + image_cleaner_enabled               = false
+      + image_cleaner_interval_hours        = 48
+      + kube_admin_config                   = (sensitive value)
+      + kube_admin_config_raw               = (sensitive value)
+      + kube_config                         = (sensitive value)
+      + kube_config_raw                     = (sensitive value)
+      + kubernetes_version                  = (known after apply)
+      + location                            = "eastus"
+      + name                                = "test-kevin-aks"
+      + node_resource_group                 = (known after apply)
+      + node_resource_group_id              = (known after apply)
+      + oidc_issuer_url                     = (known after apply)
+      + portal_fqdn                         = (known after apply)
+      + private_cluster_enabled             = false
+      + private_cluster_public_fqdn_enabled = false
+      + private_dns_zone_id                 = (known after apply)
+      + private_fqdn                        = (known after apply)
+      + public_network_access_enabled       = true
+      + resource_group_name                 = "test-rg"
+      + role_based_access_control_enabled   = true
+      + run_command_enabled                 = true
+      + sku_tier                            = "Free"
+      + support_plan                        = "KubernetesOfficial"
+      + workload_identity_enabled           = false
+
+      + default_node_pool {
+          + kubelet_disk_type    = (known after apply)
+          + max_pods             = (known after apply)
+          + name                 = "system"
+          + node_count           = 1
+          + node_labels          = (known after apply)
+          + orchestrator_version = (known after apply)
+          + os_disk_size_gb      = (known after apply)
+          + os_disk_type         = "Managed"
+          + os_sku               = (known after apply)
+          + scale_down_mode      = "Delete"
+          + type                 = "VirtualMachineScaleSets"
+          + ultra_ssd_enabled    = false
+          + vm_size              = "Standard_D2_v3"
+          + workload_runtime     = (known after apply)
+        }
+
+      + identity {
+          + principal_id = (known after apply)
+          + tenant_id    = (known after apply)
+          + type         = "SystemAssigned"
+        }
+
+      + oms_agent {
+          + log_analytics_workspace_id = "/subscriptions/44365db7-8b22-49fd-8f3b-db80bfbeb5a5/resourceGroups/test-rg/providers/Microsoft.OperationalInsights/workspaces/test-kevin-aks-log-analworkspc"
+          + oms_agent_identity         = (known after apply)
+        }
+    }
+
+  # module.aks.azurerm_role_assignment.acr_pull will be created
+  + resource "azurerm_role_assignment" "acr_pull" {
+      + id                               = (known after apply)
+      + name                             = (known after apply)
+      + principal_id                     = (known after apply)
+      + principal_type                   = (known after apply)
+      + role_definition_id               = (known after apply)
+      + role_definition_name             = "AcrPull"
+      + scope                            = "/subscriptions/44365db7-8b22-49fd-8f3b-db80bfbeb5a5/resourceGroups/test-rg/providers/Microsoft.ContainerRegistry/registries/testkevinacr"
+      + skip_service_principal_aad_check = (known after apply)
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+module.aks.azurerm_kubernetes_cluster.aks: Creating...
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [10s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [20s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [30s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [40s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [50s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [1m0s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [1m10s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [1m20s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [1m30s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [1m40s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [1m50s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [2m0s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [2m10s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [2m20s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [2m30s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [2m40s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [2m50s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [3m0s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [3m10s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [3m20s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [3m30s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [3m40s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [3m50s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [4m0s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [4m10s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [4m20s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [4m30s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [4m40s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [4m50s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [5m0s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [5m10s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Still creating... [5m20s elapsed]
+module.aks.azurerm_kubernetes_cluster.aks: Creation complete after 5m21s [id=/subscriptions/44365db7-8b22-49fd-8f3b-db80bfbeb5a5/resourceGroups/test-rg/providers/Microsoft.ContainerService/managedClusters/test-kevin-aks]
+module.aks.azurerm_role_assignment.acr_pull: Creating...
+module.aks.azurerm_role_assignment.acr_pull: Still creating... [10s elapsed]
+module.aks.azurerm_role_assignment.acr_pull: Still creating... [20s elapsed]
+module.aks.azurerm_role_assignment.acr_pull: Still creating... [30s elapsed]
+module.aks.azurerm_role_assignment.acr_pull: Creation complete after 31s [id=/subscriptions/44365db7-8b22-49fd-8f3b-db80bfbeb5a5/resourceGroups/test-rg/providers/Microsoft.ContainerRegistry/registries/testkevinacr/providers/Microsoft.Authorization/roleAssignments/7292ffeb-53ca-8de6-a8a2-4ef4d39e46aa]
+Releasing state lock. This may take a few moments...
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+
+#END

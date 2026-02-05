@@ -1,0 +1,3 @@
+########## ALERTS #############
+
+Used Azure alerts to setup a simple Memory and CPU with a threshold and created an action group to send mail.

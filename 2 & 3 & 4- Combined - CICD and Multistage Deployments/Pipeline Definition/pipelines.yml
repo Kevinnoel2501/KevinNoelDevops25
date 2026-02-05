@@ -1,0 +1,112 @@
+name: $(Build.DefinitionName)_$(Date:yyyyMMdd).$(Rev:r)
+
+pool: 'Default'
+
+trigger:
+  branches:
+    include:
+      - main
+      - dev
+      - stg
+
+stages:
+
+- stage: Build
+  displayName: 'Build and Test'
+  jobs:
+  - job: Build
+    displayName: 'Build Random Sentence Proj'
+    steps:
+    - template: templates/build.yml
+      parameters:
+        solution: '**/*.sln'
+        buildConfiguration: 'Release'
+        artifactName: 'drop'
+
+- stage: ReleaseDev
+  displayName: 'Release to Dev App Service'
+  dependsOn: Build
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+  variables:
+    - template: variables/dev.yml # dev overrides
+  jobs:
+  - job: DeployDev
+    displayName: 'Deploy Dev'
+    steps:
+    - template: templates/release.yml
+      parameters:
+        environment: $(environment)
+        appServiceName: $(appServiceName)
+        resourceGroupName: $(resourceGroupName)
+        sp: 'Pipelines-Service'
+        keyVaultName: $(keyVaultName)
+        secretName: $(secretName)
+
+- stage: ReleaseStg
+  displayName: 'Release to Stg App Service'
+  dependsOn: Build
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/stg')
+  variables:
+    - template: variables/stg.yml # stg overrides
+  jobs:
+  - job: DeployStg
+    displayName: 'Deploy Stg'
+    steps:
+    - template: templates/release.yml
+      parameters:
+        environment: $(environment)
+        appServiceName: $(appServiceName)
+        resourceGroupName: $(resourceGroupName)
+        sp: 'Pipelines-Service'
+        keyVaultName: $(keyVaultName)
+        secretName: $(secretName)
+
+    - script: |
+        echo "Run integration test"
+      displayName: 'Run Integration Tests'
+
+- stage: ReleaseStgFromMain
+  displayName: 'Release to Stg (Main)'
+  dependsOn: Build
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  variables:
+    - template: variables/stg.yml # stg overrides
+  jobs:
+  - job: DeployStgMain
+    displayName: 'Deploy Stg from Main'
+    steps:
+    - template: templates/release.yml
+      parameters:
+        environment: $(environment)
+        appServiceName: $(appServiceName)
+        resourceGroupName: $(resourceGroupName)
+        sp: 'Pipelines-Service'
+        keyVaultName: $(keyVaultName)
+        secretName: $(secretName)
+
+    - script: |
+        echo "Run integration test"
+      displayName: 'Run Integration Tests'
+
+- stage: ReleaseProd
+  displayName: 'Release to Prod App Service'
+  dependsOn: ReleaseStgFromMain
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  variables:
+    - template: variables/prd.yml # prd overrides
+  jobs:
+  - deployment: DeployProd
+    displayName: 'Deploy Prod'
+    environment: 'prd'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: templates/release.yml
+            parameters:
+              environment: $(environment)
+              appServiceName: $(appServiceName)
+              resourceGroupName: $(resourceGroupName)
+              sp: 'Pipelines-Service'
+              keyVaultName: $(keyVaultName)
+              secretName: $(secretName)

@@ -1,0 +1,6 @@
+variables:
+  environment: 'dev'
+  appServiceName: 'test-app'
+  resourceGroupName: 'test-rg'
+  keyVaultName: 'testkevinakv'
+  secretName: 'StorageAccountConnStr'

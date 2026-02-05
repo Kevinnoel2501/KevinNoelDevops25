@@ -1,0 +1,7 @@
+S /Users/sonu/MyContainerProj/.infra/random-app-chart> helm install random-app-2 .
+NAME: random-app-2
+LAST DEPLOYED: Thu Feb  5 17:00:37 2026
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None

@@ -1,0 +1,25 @@
+2026-02-04T20:29:15.7755520Z ##[section]Starting: Download
+2026-02-04T20:29:15.7766720Z ==============================================================================
+2026-02-04T20:29:15.7766880Z Task         : Download build artifacts
+2026-02-04T20:29:15.7766980Z Description  : Download files that were saved as artifacts of a completed build
+2026-02-04T20:29:15.7767270Z Version      : 1.220.0
+2026-02-04T20:29:15.7767380Z Author       : Microsoft Corporation
+2026-02-04T20:29:15.7767480Z Help         : https://docs.microsoft.com/azure/devops/pipelines/tasks/utility/download-build-artifacts
+2026-02-04T20:29:15.7767640Z ==============================================================================
+2026-02-04T20:29:16.0125060Z Download from the specified build: #58
+2026-02-04T20:29:16.0138690Z Download artifact to: /Users/sonu/myagent/_work/1/
+2026-02-04T20:29:16.4624770Z Pattern: **
+2026-02-04T20:29:16.4633690Z Minimatch patterns: [**]
+2026-02-04T20:29:16.4637590Z Applying include pattern against original list.
+2026-02-04T20:29:16.4722330Z 2 matches
+2026-02-04T20:29:16.4859040Z 2 final results
+2026-02-04T20:29:16.4895330Z Start downloading FCS artifact- drop
+2026-02-04T20:29:16.6634760Z Using default max parallelism.
+2026-02-04T20:29:16.6638890Z Creating dedup client:
+2026-02-04T20:29:16.6639250Z  - Max dedup parallelism: 192
+2026-02-04T20:29:16.6639490Z  - Using blobstore domain: 0
+2026-02-04T20:29:16.6641050Z  - Using redirect timeout: 
+2026-02-04T20:29:16.6824220Z  - Hash type: Dedup64K
+2026-02-04T20:29:16.6904710Z Downloading: /Users/sonu/myagent/_work/1/drop/drop.zip
+2026-02-04T20:29:17.1253400Z Downloading artifact finished.
+2026-02-04T20:29:17.1306300Z ##[section]Finishing: Download

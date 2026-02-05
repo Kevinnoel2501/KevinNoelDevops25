@@ -1,0 +1,12 @@
+2026-02-04T20:29:51.3139860Z ##[section]Starting: Configure App Settings
+2026-02-04T20:29:51.3152120Z ==============================================================================
+2026-02-04T20:29:51.3152370Z Task         : Azure App Service Settings
+2026-02-04T20:29:51.3152540Z Description  : Update/Add App settings an Azure Web App for Linux or Windows
+2026-02-04T20:29:51.3152720Z Version      : 1.268.0
+2026-02-04T20:29:51.3152860Z Author       : Microsoft Corporation
+2026-02-04T20:29:51.3153110Z Help         : https://docs.microsoft.com/azure/devops/pipelines/tasks/deploy/azure-app-service-settings
+2026-02-04T20:29:51.3153310Z ==============================================================================
+2026-02-04T20:29:51.7184260Z Got service connection details for Azure App Service:'dev-test-app'
+2026-02-04T20:29:51.7462890Z Updating App Service Application settings. Data: {"StorageAccountConnStr":"***"}
+2026-02-04T20:29:54.0582090Z App Service Application settings are already present.
+2026-02-04T20:29:55.3114410Z ##[section]Finishing: Configure App Settings

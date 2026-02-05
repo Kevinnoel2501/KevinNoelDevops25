@@ -1,0 +1,19 @@
+#### SIMPLE QUERY TO PIPE stderr logs from ContainerLog table to KubePodInventory and display Pod Details ##########
+
+ContainerLog
+| where LogEntrySource == "stderr"
+| project TimeGenerated, ContainerID, LogEntry, Image, Computer
+| join kind=inner (
+    KubePodInventory
+    | project ContainerID, ContainerStatusReason, PodIp, Namespace, Name
+) on ContainerID
+| project TimeGenerated,
+          Namespace,
+          Name,
+          ContainerID,
+          LogEntry,
+          ContainerStatusReason,
+          PodIp,
+          Image,
+          Computer
+| order by TimeGenerated desc

@@ -1,0 +1,9 @@
+variables:
+  environment: 'prd'
+  appServiceName: 'test-app'
+  resourceGroupName: 'test-rg'
+  keyVaultName: 'testkevinakv'
+  secretName: 'StorageAccountConnStr'
+
+### Ideally the the Resource Groups , service principal , and other resources values will change from env to env. Keeping the same name to maintain all the resources for this assesment
+### in a single resource group #######

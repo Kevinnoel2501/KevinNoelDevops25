@@ -1,0 +1,32 @@
+#### LOGS ####
+
+PS /Users/sonu/MyContainerProj/scripts> . '/Users/sonu/MyContainerProj/scripts/deploy-k8.ps1'
+Getting AKS credentials...
+Merged "test-kevin-aks" as current context in /Users/sonu/.kube/config
+Applying Kubernetes manifests...
+namespace/random-app created
+deployment.apps/random-app created
+error: the path "../.infra/k8/service.yml" does not exist
+Write-Error: Kubernetes apply failed
+
+###### errored out due to typo in file name #########
+
+##run again ####
+
+PS /Users/sonu/MyContainerProj/scripts> . '/Users/sonu/MyContainerProj/scripts/deploy-k8.ps1'
+Getting AKS credentials...
+Merged "test-kevin-aks" as current context in /Users/sonu/.kube/config
+Applying Kubernetes manifests...
+namespace/random-app unchanged
+deployment.apps/random-app unchanged
+service/random-app created
+Deployment completed successfully
+
+
+###### PODS RUNNING ######
+
+PS /Users/sonu/MyContainerProj/.infra/k8> kubectl get pods -n random-app
+NAME                          READY   STATUS    RESTARTS   AGE
+random-app-84d749544b-2ks56   1/1     Running   0          44s
+random-app-84d749544b-7f2nl   1/1     Running   0          72s
+random-app-84d749544b-xb2c9   1/1     Running   0          57s

@@ -1,0 +1,38 @@
+2026-02-04T20:29:12.7011110Z ##[section]Starting: Checkout Kevinnoel2501/SampleDotnetProj@dev to s
+2026-02-04T20:29:12.7116980Z ==============================================================================
+2026-02-04T20:29:12.7117430Z Task         : Get sources
+2026-02-04T20:29:12.7117720Z Description  : Get sources from a repository. Supports Git, TfsVC, and SVN repositories.
+2026-02-04T20:29:12.7117920Z Version      : 1.0.0
+2026-02-04T20:29:12.7118180Z Author       : Microsoft
+2026-02-04T20:29:12.7118580Z Help         : [More Information](https://go.microsoft.com/fwlink/?LinkId=798199)
+2026-02-04T20:29:12.7118760Z ==============================================================================
+2026-02-04T20:29:13.0731720Z Syncing repository: Kevinnoel2501/SampleDotnetProj (GitHub)
+2026-02-04T20:29:13.0742770Z ##[command]git version
+2026-02-04T20:29:13.1303220Z git version 2.40.1
+2026-02-04T20:29:13.1361410Z ##[command]git config --get remote.origin.url
+2026-02-04T20:29:13.1758710Z ##[command]git clean -ffdx
+2026-02-04T20:29:13.2268490Z Removing RandomSentenceApp.Tests/bin/
+2026-02-04T20:29:13.2271530Z Removing RandomSentenceApp.Tests/obj/
+2026-02-04T20:29:13.2272180Z Removing RandomSentenceApp/bin/
+2026-02-04T20:29:13.2272810Z Removing RandomSentenceApp/obj/
+2026-02-04T20:29:13.2280180Z ##[command]git reset --hard HEAD
+2026-02-04T20:29:13.2704590Z HEAD is now at 1bfb92f Update pipelines.yml for Azure Pipelines
+2026-02-04T20:29:13.2716770Z ##[command]git sparse-checkout disable
+2026-02-04T20:29:13.3102970Z ##[command]git config gc.auto 0
+2026-02-04T20:29:13.3486150Z ##[command]git config core.longpaths true
+2026-02-04T20:29:13.3795990Z ##[command]git config --get-all http.https://github.com/Kevinnoel2501/SampleDotnetProj.extraheader
+2026-02-04T20:29:13.4163030Z ##[command]git config --get-all http.extraheader
+2026-02-04T20:29:13.4533070Z ##[command]git config --get-regexp .*extraheader
+2026-02-04T20:29:13.4904880Z ##[command]git config --get-all http.proxy
+2026-02-04T20:29:13.5271700Z ##[command]git config http.version HTTP/1.1
+2026-02-04T20:29:13.5653190Z ##[command]git config --get-all remote.origin.promisor
+2026-02-04T20:29:13.6008720Z ##[command]git config --get-all remote.origin.partialclonefilter
+2026-02-04T20:29:13.6390060Z ##[command]git --config-env=http.extraheader=env_var_http.extraheader fetch --force --tags --prune --prune-tags --progress --no-recurse-submodules origin --depth=1  +1bfb92f96274b81431d04a98859cd08fc6eb04a6:refs/remotes/origin/1bfb92f96274b81431d04a98859cd08fc6eb04a6
+2026-02-04T20:29:14.6321430Z remote: Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)        
+2026-02-04T20:29:14.6994680Z ##[command]git --config-env=http.extraheader=env_var_http.extraheader fetch --force --tags --prune --prune-tags --progress --no-recurse-submodules origin --depth=1  +1bfb92f96274b81431d04a98859cd08fc6eb04a6
+2026-02-04T20:29:15.6545010Z remote: Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)        
+2026-02-04T20:29:15.6889760Z From https://github.com/Kevinnoel2501/SampleDotnetProj
+2026-02-04T20:29:15.6890630Z  * branch            1bfb92f96274b81431d04a98859cd08fc6eb04a6 -> FETCH_HEAD
+2026-02-04T20:29:15.7663690Z ##[command]git checkout --progress --force refs/remotes/origin/1bfb92f96274b81431d04a98859cd08fc6eb04a6
+2026-02-04T20:29:15.7669690Z HEAD is now at 1bfb92f Update pipelines.yml for Azure Pipelines
+2026-02-04T20:29:15.7717730Z ##[section]Finishing: Checkout Kevinnoel2501/SampleDotnetProj@dev to s

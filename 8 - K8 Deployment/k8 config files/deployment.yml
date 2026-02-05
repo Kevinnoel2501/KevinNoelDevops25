@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-app
+  namespace: random-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: random-app
+  template:
+    metadata:
+      labels:
+        app: random-app
+    spec:
+      containers:
+        - name: random-app
+          image: testkevinacr.azurecr.io/random-sentence-app:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 8080
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"

@@ -1,0 +1,7 @@
+########### PIPELINE BUG ##############
+
+Created a library group called dev-vars and defined a var 'print'
+
+Tried printing this var in the pipeline.yml  without linking it even though the run passes the value is empty which will cause issues if its part of deployment
+
+Fixed it by adding the variables section and defining this group. Which later prints the desired value.

@@ -1,0 +1,19 @@
+
+Events:
+  Type     Reason     Age                  From               Message
+  ----     ------     ----                 ----               -------
+  Normal   Scheduled  10m                  default-scheduler  Successfully assigned random-app/random-app-85f8f78f97-9wgkw to aks-system-11738787-vmss000000
+  Normal   Pulling    7m40s (x5 over 10m)  kubelet            Pulling image "testkevinacr.azurecr.io/random-app-gen:latest"
+  Warning  Failed     7m40s (x5 over 10m)  kubelet            Failed to pull image "testkevinacr.azurecr.io/random-app-gen:latest": failed to pull and unpack image "testkevinacr.azurecr.io/random-app-gen:latest": failed to resolve reference "testkevinacr.azurecr.io/random-app-gen:latest": failed to authorize: failed to fetch anonymous token: unexpected status from GET request to https://testkevinacr.azurecr.io/oauth2/token?scope=repository%3Arandom-app-gen%3Apull&service=testkevinacr.azurecr.io: 401 Unauthorized
+  Warning  Failed     7m40s (x5 over 10m)  kubelet            Error: ErrImagePull
+  Normal   BackOff    30s (x44 over 10m)   kubelet            Back-off pulling image "testkevinacr.azurecr.io/random-app-gen:latest"
+  Warning  Failed     30s (x44 over 10m)   kubelet            Error: ImagePullBackOff
+
+The above error was because the repo name was wrong
+
+###### THE  next ERROR ###########
+Even though I had the AcrPUll RBAC configured as I was building in my macOS which defaults to arm64 which caused a platform mismatch
+
+error: code = NotFound desc = failed to pull and unpack image "testkevinacr.azurecr.io/random-sentence-app:latest": no match for platform in manifest: not found, failed to pull and unpack image "testkevinacr.azurecr.io/random-sentence-app:latest": failed to resolve reference "testkevinacr.azurecr.io/random-sentence-app:latest": failed to authorize: failed to fetch anonymous token: unexpected status from GET request to https://testkevinacr.azurecr.io/oauth2/token?scope=repository%3Arandom-sentence-app%3Apull&service=testkevinacr.azurecr.io: 401 Unauthorized]
+
+docker buildx build --platform linux/amd64 solved the issue

@@ -1,0 +1,17 @@
+2026-02-04T20:29:29.1844020Z ##[section]Starting: Deploy to Azure App Service
+2026-02-04T20:29:29.1852750Z ==============================================================================
+2026-02-04T20:29:29.1852880Z Task         : Azure Web App
+2026-02-04T20:29:29.1852960Z Description  : Deploy an Azure Web App for Linux or Windows
+2026-02-04T20:29:29.1853060Z Version      : 1.268.2
+2026-02-04T20:29:29.1853150Z Author       : Microsoft Corporation
+2026-02-04T20:29:29.1853240Z Help         : https://aka.ms/azurewebapptroubleshooting
+2026-02-04T20:29:29.1853340Z ==============================================================================
+2026-02-04T20:29:29.6698180Z Got service connection details for Azure App Service:'dev-test-app'
+2026-02-04T20:29:34.0419800Z Updating App Service Application settings. Data: {"WEBSITE_RUN_FROM_PACKAGE":"1"}
+2026-02-04T20:29:34.0420090Z Deleting App Service Application settings. Data: ["WEBSITE_RUN_FROM_ZIP"]
+2026-02-04T20:29:35.0085710Z App Service Application settings are already present.
+2026-02-04T20:29:41.0487960Z Package deployment using ZIP Deploy initiated.
+2026-02-04T20:29:46.6262140Z Successfully deployed web package to App Service.
+2026-02-04T20:29:46.6262580Z NOTE: Run From Package makes wwwroot read-only, so you will receive an error when writing files to this directory.
+2026-02-04T20:29:51.3025400Z App Service Application URL: https://dev-test-app-eza7fjdcamd7d2h8.canadacentral-01.azurewebsites.net
+2026-02-04T20:29:51.3083340Z ##[section]Finishing: Deploy to Azure App Service
