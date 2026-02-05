@@ -1,6 +1,6 @@
 # Azure Cost Optimization
 
-During this assessment, we looked at all the types of resources we are being charged for and if this wasn't a free tier but a actual org resources the identified areas where costs can be optimized. The main areas are:
+During this assessment, Looking at all the types of resources we are being charged for and if this wasn't a free tier but a actual org resources the identified areas where costs can be optimized. The main areas are:
 
 - **Azure DevOps licenses**  
 - **App Service Plans**  
