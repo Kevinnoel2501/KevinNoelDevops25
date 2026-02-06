@@ -1,0 +1,17 @@
+###### AFTER FIXING THE SERVICE PORT TO 9090 #####
+/ # nslookup random-app
+Server:         10.0.0.10
+Address:        10.0.0.10:53
+
+Name:   random-app.random-app.svc.cluster.local
+Address: 10.0.175.100
+
+
+** server can't find random-app.cluster.local: NXDOMAIN
+
+** server can't find random-app.cluster.local: NXDOMAIN
+
+/ # wget -qo- http://10.0.175.100
+wget: server returned error: HTTP/1.1 404 Not Found
+
+we get the response 404 from the pods itself not connection refuses
