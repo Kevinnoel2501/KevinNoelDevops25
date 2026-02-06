@@ -1,0 +1,12 @@
+## .github/dependabot.yml file 
+
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+    allow:
+      - dependency-type: "direct"
